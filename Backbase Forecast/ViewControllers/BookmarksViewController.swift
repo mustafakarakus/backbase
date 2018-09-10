@@ -10,7 +10,6 @@ import UIKit
 
 class BookmarksViewController: UIViewController {
     @IBOutlet weak var tblBookmarks: UITableView!
-    var bookmarks = [BookmarkModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
         UISettings()
@@ -18,7 +17,9 @@ class BookmarksViewController: UIViewController {
     func UISettings(){
         self.view.dropShadow(offset: -5)
         tblBookmarks.tableFooterView = UIView(frame: CGRect.zero)
-        tblBookmarks.emptyMessage(Strings.NoBookmark)
+        if ForecastUserDefaults.Bookmarks.count == 0{
+            tblBookmarks.emptyMessage(Strings.NoBookmark) 
+        }
     }
     @IBAction func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -26,10 +27,16 @@ class BookmarksViewController: UIViewController {
 }
 extension BookmarksViewController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookmarks.count
+        if ForecastUserDefaults.Bookmarks.count > 0{
+            tblBookmarks.removeEmptyMessage()
+        }
+        return ForecastUserDefaults.Bookmarks.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        let bookmark = ForecastUserDefaults.Bookmarks[indexPath.row]
+        cell.textLabel?.text = bookmark.name
+        return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70

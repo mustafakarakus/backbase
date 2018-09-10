@@ -13,9 +13,10 @@ struct Keys {
     static let ApiKey = "c6e381d8c7ff98f0fee43775817cf6ad"
     static let TodaysForecastUrl = "\(Keys.BaseUrl)/weather?appid=\(Keys.ApiKey)"
     static let FiveDaysForecastUrl = "\(Keys.BaseUrl)/forecast?appid=\(Keys.ApiKey)"
-
+    static let UserBookmarks = ""
     
     //    static let TodaysForecastUrl = "\(Keys.BaseUrl)/weather?lat=0&lon=0&appid=\(Keys.ApiKey)&units=metric"
 
     
-} 
+}
+

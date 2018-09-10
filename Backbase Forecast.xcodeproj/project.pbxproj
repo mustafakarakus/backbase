@@ -23,6 +23,7 @@
 		8499B2322146F9A600D9BAE7 /* ForecastProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2312146F9A600D9BAE7 /* ForecastProvider.swift */; };
 		8499B2342146F9C200D9BAE7 /* BaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2332146F9C200D9BAE7 /* BaseProvider.swift */; };
 		8499B2362147081C00D9BAE7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2352147081C00D9BAE7 /* BaseViewController.swift */; };
+		8499B239214710A900D9BAE7 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B238214710A900D9BAE7 /* Defaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		8499B2312146F9A600D9BAE7 /* ForecastProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastProvider.swift; sourceTree = "<group>"; };
 		8499B2332146F9C200D9BAE7 /* BaseProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseProvider.swift; sourceTree = "<group>"; };
 		8499B2352147081C00D9BAE7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		8499B238214710A900D9BAE7 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				8499B21F2146D25500D9BAE7 /* Keys.swift */,
 				8499B22A2146EDB700D9BAE7 /* Strings.swift */,
 				8499B2282146DED900D9BAE7 /* Utils.swift */,
+				8499B238214710A900D9BAE7 /* Defaults.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8499B2362147081C00D9BAE7 /* BaseViewController.swift in Sources */,
+				8499B239214710A900D9BAE7 /* Defaults.swift in Sources */,
 				8499B2272146D62B00D9BAE7 /* BookmarksViewController.swift in Sources */,
 				8499B22B2146EDB700D9BAE7 /* Strings.swift in Sources */,
 				8499B2292146DED900D9BAE7 /* Utils.swift in Sources */,

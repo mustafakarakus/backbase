@@ -40,14 +40,14 @@ class ViewController: BaseViewController {
         if recognizer.state != .began { return }
         let touchPoint = recognizer.location(in: mapView)
         let mapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-        let annotation = BookmarkAnnotation(id: 1, model: BookmarkModel())
-        annotation.coordinate = mapCoordinate
-        mapView.addAnnotation(annotation)
-        
         let provider = ForecastProvider()
         provider.getTodaysForecast(latitude: mapCoordinate.latitude, longitute: mapCoordinate.longitude) { (result, error) in
-            if let result = result{
-                print(result.desc)
+            if let forecastData = result{
+                let bookmarkModel = BookmarkModel(latitude: "\(mapCoordinate.latitude)", longitude: "\(mapCoordinate.longitude)", name: forecastData.name)
+                ForecastUserDefaults.addBookmark(bookmarkModel)
+                let annotation = BookmarkAnnotation(id: 1, model: bookmarkModel)
+                annotation.coordinate = mapCoordinate
+                self.mapView.addAnnotation(annotation)
             }else{
                 self.showError(title: Strings.ErrorTitle, message: Strings.ErrorOccured, handler: nil)
             }
