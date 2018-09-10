@@ -9,19 +9,33 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
-
+class ViewController: BaseViewController {
     @IBOutlet weak var mapView: MKMapView!
-    var data = [BookmarkModel]() 
+    var locationManager = CLLocationManager()
+    var data = [BookmarkModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationSettings()
         addBookmarkPinGesture()
+    }
+    
+    // MARK: Settings
+    func locationSettings(){
+        locationManager.delegate = self
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        }else{
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     func addBookmarkPinGesture(){
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(mapViewLongPressed(_:)))
-        gestureRecognizer.minimumPressDuration = 1.0
+        gestureRecognizer.minimumPressDuration = 0.5
         mapView.addGestureRecognizer(gestureRecognizer)
     }
+    
+    // MARK: Map Action
     @objc func mapViewLongPressed(_ recognizer : UIGestureRecognizer){
         if recognizer.state != .began { return }
         let touchPoint = recognizer.location(in: mapView)
@@ -29,7 +43,24 @@ class ViewController: UIViewController {
         let annotation = BookmarkAnnotation(id: 1, model: BookmarkModel())
         annotation.coordinate = mapCoordinate
         mapView.addAnnotation(annotation)
+        
+        let provider = ForecastProvider()
+        provider.getTodaysForecast(latitude: mapCoordinate.latitude, longitute: mapCoordinate.longitude) { (result, error) in
+            if let result = result{
+                print(result.desc)
+            }else{
+                self.showError(title: Strings.ErrorTitle, message: Strings.ErrorOccured, handler: nil)
+            }
+        }
+        
+        if #available(iOS 10.0, *) {
+            let feedback = UIImpactFeedbackGenerator() // haptic
+            feedback.impactOccurred()
+        } else {
+        }
     }
+    
+    // MARK: IBActions
     @IBAction func btnShowBookmarks(_ sender: UIButton) {
         let bookmarksViewController = self.storyboard?.instantiateViewController(withIdentifier: "BookmarksViewController") as! BookmarksViewController
         bookmarksViewController.modalPresentationStyle = UIModalPresentationStyle.custom
@@ -51,6 +82,7 @@ extension ViewController:UIViewControllerTransitioningDelegate{
     }
 }
 extension ViewController : MKMapViewDelegate{
+    // MARK: Mapview Delegates
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else {
             return nil
@@ -72,6 +104,11 @@ extension ViewController : MKMapViewDelegate{
         return annotationView
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+    }
+}
+extension ViewController:CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
     }
 }

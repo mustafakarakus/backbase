@@ -10,4 +10,6 @@ import Foundation
 
 struct Strings {
     static let NoBookmark = "No bookmarks yet.\nTo add a bookmark, please long press to map for one second"
+    static let ErrorTitle = "Error"
+    static let ErrorOccured = "Error occured, please try again later"
 } 
