@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "closure #1 in ForecastProvider.getTodaysForecast(latitude:longitute:units:result:):ForecastProvider.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in CityViewController.loadForecastData():CityViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "strDate">
+            </PersistentString>
+            <PersistentString
+               value = "dateFormatter.string(from: date)">
+            </PersistentString>
+            <PersistentString
+               value = "Date(timeIntervalSince1970: 1536656400)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static ForecastUserDefaults.Bookmarks.getter:Defaults.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "String(describing: ForecastUserDefaults.Bookmarks.self)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ForecastModel.init(with:):ForecastModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "rainInformation[&quot;3h&quot;] as? Double">
+            </PersistentString>
+            <PersistentString
+               value = "dictionary[&quot;rain&quot;] as? [String:Any]">
+            </PersistentString>
+            <PersistentString
+               value = "(dictionary[&quot;weather&quot;] as? [[String:Any]]).first">
+            </PersistentString>
+            <PersistentString
+               value = "(weatherData.first)?[&quot;description&quot;] as? String">
+            </PersistentString>
+            <PersistentString
+               value = "dictionary[&quot;name&quot;] as? String">
+            </PersistentString>
+            <PersistentString
+               value = "dictionary[&quot;main&quot;][&quot;country&quot;] as? String">
+            </PersistentString>
+            <PersistentString
+               value = "dictionary[&quot;main&quot;]?">
+            </PersistentString>
+            <PersistentString
+               value = "dictionary[&quot;cod&quot;] as? Int">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__pthread_kill:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "NSKeyedUnarchiver.unarchiveObject(with: placesData)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in ViewController.mapViewLongPressed(_:):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.didSelectBookmark(_:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(self.mapView.annotations[2] as? BookmarkAnnotation).id == bookmark.id">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BookmarksViewController.tableView(_:didSelectRowAt:):BookmarksViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CityViewController.collectionView(_:numberOfItemsInSection:):CityViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in CityViewController.btnRemoveBookmark(_:):CityViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ForecastUserDefaults.Bookmarks">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
