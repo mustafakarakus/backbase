@@ -9,13 +9,12 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        super.viewDidLoad() 
     }
-
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.dismiss(animated: true, completion: nil)
+    }
     func showError(title:String, message:String,handler: (((UIAlertAction) -> Swift.Void)?)){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "Okay", style: .default, handler: handler)

@@ -19,7 +19,7 @@ class SettingsViewController: BaseViewController {
         self.view.dropShadow(offset: -5)
         segUnits.selectedSegmentIndex = ForecastUserDefaults.Unit
     }
-    @IBAction func Dismiss(_ sender: Any) {
+    @IBAction func btnDismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     

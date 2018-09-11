@@ -20,7 +20,7 @@
                value = "rainInformation[&quot;3h&quot;] as? Double">
             </PersistentString>
             <PersistentString
-               value = "dictionary[&quot;rain&quot;] as? [String:Any]">
+               value = "dictionary[&quot;name&quot;] as? String">
             </PersistentString>
             <PersistentString
                value = "(dictionary[&quot;weather&quot;] as? [[String:Any]]).first">
@@ -29,7 +29,7 @@
                value = "(weatherData.first)?[&quot;description&quot;] as? String">
             </PersistentString>
             <PersistentString
-               value = "dictionary[&quot;name&quot;] as? String">
+               value = "dictionary[&quot;rain&quot;] as? [String:Any]">
             </PersistentString>
             <PersistentString
                value = "dictionary[&quot;main&quot;][&quot;country&quot;] as? String">
@@ -49,6 +49,9 @@
                value = "(self.mapView.annotations[2] as? BookmarkAnnotation).id == bookmark.id">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in ViewController.didSelectKnownLocation(_:):ViewController.swift">
       </ContextState>
       <ContextState
          contextName = "closure #1 in CityViewController.loadForecastData():CityViewController.swift">
@@ -96,6 +99,14 @@
          <PersistentStrings>
             <PersistentString
                value = "ForecastUserDefaults.Bookmarks">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BaseViewController.viewWillTransition(to:with:):BaseViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = " self.presentedViewController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

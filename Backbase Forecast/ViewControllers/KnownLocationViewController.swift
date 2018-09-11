@@ -28,6 +28,10 @@ class KnownLocationViewController: BaseViewController {
     func UISettings(){
         self.view.dropShadow(offset: -5)
     }
+    @IBAction func btnDismiss(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 extension KnownLocationViewController : UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

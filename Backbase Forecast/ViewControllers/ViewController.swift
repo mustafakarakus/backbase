@@ -125,7 +125,7 @@ class ViewController: BaseViewController {
         self.present(cityViewController, animated: true, completion: nil)
     }
     @IBAction func btnShowKnownPlaces(_ sender: UIButton) {
-        self.partialViewHeight = 190
+        self.partialViewHeight = 180
         let KnownLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "KnownLocationViewController") as! KnownLocationViewController
         KnownLocationViewController.modalPresentationStyle = UIModalPresentationStyle.custom
         KnownLocationViewController.transitioningDelegate = self
@@ -152,6 +152,7 @@ extension ViewController:UIViewControllerTransitioningDelegate{
         return PartialViewController(presentedViewController: presented, presentingViewController: presenting,size: CGSize(width: self.view.frame.size.width, height: partialViewHeight))
     }
 }
+ 
 extension ViewController : MKMapViewDelegate{
     // MARK: Mapview Delegates
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
