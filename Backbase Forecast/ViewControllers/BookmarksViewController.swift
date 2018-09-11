@@ -7,9 +7,12 @@
 //
 
 import UIKit
-
+protocol BookmarkDelegate {
+    func didSelectBookmark(_ bookmark:BookmarkModel)
+}
 class BookmarksViewController: UIViewController {
     @IBOutlet weak var tblBookmarks: UITableView!
+    var delegate:BookmarkDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         UISettings()
@@ -40,6 +43,11 @@ extension BookmarksViewController : UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let bookmark = ForecastUserDefaults.Bookmarks[indexPath.row]
+        delegate?.didSelectBookmark(bookmark)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

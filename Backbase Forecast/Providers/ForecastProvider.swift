@@ -9,11 +9,11 @@
 import Foundation
 
 class ForecastProvider:BaseProvider{
-    func getTodaysForecast(latitude:Double, longitute:Double, units:String="metric",result completion:@escaping ((ForecastModel?,Error?)->())){
+    func getTodaysForecast(latitude:Double, longitute:Double, units:String="metric",result completion:@escaping ((WeatherModel?,Error?)->())){
         let url = "\(Keys.TodaysForecastUrl)&lat=\(latitude)&lon=\(longitute)&units=\(units)"
         createRequest(withUrlString: url) { (result, error) in
             if let result = result{
-                completion(ForecastModel(with: result), nil)
+                completion(WeatherModel(with: result), nil)
             }else{
                 completion(nil, error)
             }

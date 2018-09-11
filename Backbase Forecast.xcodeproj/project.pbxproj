@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		847B497821477D85008A2761 /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B497721477D85008A2761 /* CityViewController.swift */; };
 		84917DD92146BB4000480ED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84917DD82146BB4000480ED3 /* AppDelegate.swift */; };
 		84917DDB2146BB4000480ED3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84917DDA2146BB4000480ED3 /* ViewController.swift */; };
 		84917DDE2146BB4000480ED3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84917DDC2146BB4000480ED3 /* Main.storyboard */; };
@@ -14,7 +15,7 @@
 		84917DE32146BB4000480ED3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84917DE12146BB4000480ED3 /* LaunchScreen.storyboard */; };
 		8499B2192146C9C400D9BAE7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2182146C9C400D9BAE7 /* Extensions.swift */; };
 		8499B2202146D25500D9BAE7 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B21F2146D25500D9BAE7 /* Keys.swift */; };
-		8499B2232146D2F600D9BAE7 /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2222146D2F600D9BAE7 /* ForecastModel.swift */; };
+		8499B2232146D2F600D9BAE7 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2222146D2F600D9BAE7 /* WeatherModel.swift */; };
 		8499B2252146D3E000D9BAE7 /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2242146D3E000D9BAE7 /* BookmarkModel.swift */; };
 		8499B2272146D62B00D9BAE7 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2262146D62B00D9BAE7 /* BookmarksViewController.swift */; };
 		8499B2292146DED900D9BAE7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499B2282146DED900D9BAE7 /* Utils.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		847B497721477D85008A2761 /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
 		84917DD52146BB4000480ED3 /* Backbase Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backbase Forecast.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84917DD82146BB4000480ED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84917DDA2146BB4000480ED3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,7 +38,7 @@
 		84917DE42146BB4000480ED3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8499B2182146C9C400D9BAE7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		8499B21F2146D25500D9BAE7 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		8499B2222146D2F600D9BAE7 /* ForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
+		8499B2222146D2F600D9BAE7 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		8499B2242146D3E000D9BAE7 /* BookmarkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		8499B2262146D62B00D9BAE7 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		8499B2282146DED900D9BAE7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				84917DDA2146BB4000480ED3 /* ViewController.swift */,
 				8499B2262146D62B00D9BAE7 /* BookmarksViewController.swift */,
 				8499B2352147081C00D9BAE7 /* BaseViewController.swift */,
+				847B497721477D85008A2761 /* CityViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -115,7 +118,7 @@
 		8499B2212146D29C00D9BAE7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8499B2222146D2F600D9BAE7 /* ForecastModel.swift */,
+				8499B2222146D2F600D9BAE7 /* WeatherModel.swift */,
 				8499B2242146D3E000D9BAE7 /* BookmarkModel.swift */,
 			);
 			path = Models;
@@ -230,7 +233,8 @@
 				8499B2192146C9C400D9BAE7 /* Extensions.swift in Sources */,
 				8499B22E2146F01200D9BAE7 /* BookmarkAnnotation.swift in Sources */,
 				84917DD92146BB4000480ED3 /* AppDelegate.swift in Sources */,
-				8499B2232146D2F600D9BAE7 /* ForecastModel.swift in Sources */,
+				8499B2232146D2F600D9BAE7 /* WeatherModel.swift in Sources */,
+				847B497821477D85008A2761 /* CityViewController.swift in Sources */,
 				8499B2322146F9A600D9BAE7 /* ForecastProvider.swift in Sources */,
 				8499B2202146D25500D9BAE7 /* Keys.swift in Sources */,
 				8499B2342146F9C200D9BAE7 /* BaseProvider.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  ForecastModel.swift
+//  WeatherModel.swift
 //  Backbase Forecast
 //
 //  Created by Admin on 10.09.2018.
@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class ForecastModel:NSObject {
+class WeatherModel:NSObject {
     var id: Int?
     var code:Int?
     var name : String?
@@ -16,6 +16,8 @@ class ForecastModel:NSObject {
     var main:String?
     var humidity:Int?
     var tempereture:Double?
+    var minTemperature:Double?
+    var maxTemperature:Double?
     var windSpeed:Double?
     var windDegree:Double?
     var rainChange:Double?
@@ -34,6 +36,8 @@ class ForecastModel:NSObject {
         if let mainInformation = dictionary["main"] as? [String:Any]{
             humidity = mainInformation["humidity"] as? Int
             tempereture = mainInformation["temp"] as? Double
+            minTemperature = mainInformation["temp_min"] as? Double
+            maxTemperature = mainInformation["temp_max"] as? Double  
         }
         if let windInformation = dictionary["wind"] as? [String:Any]{
             windSpeed = windInformation["speed"] as? Double
