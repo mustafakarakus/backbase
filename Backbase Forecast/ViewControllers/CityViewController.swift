@@ -19,6 +19,7 @@ class CityViewController: BaseViewController {
     var coordinate:CLLocationCoordinate2D!
     var delegate:CityViewControllerDelegate?
     var removeButtonIsHidden:Bool!
+    var cityTitle: String!
     @IBOutlet weak var btnRemoveBookmark: UIButton!
     @IBOutlet weak var tblForecast: UICollectionView!
     @IBOutlet weak var lblName: UILabel!
@@ -41,7 +42,7 @@ class CityViewController: BaseViewController {
     }
     
     func initView(){
-        lblName.text = weather.name
+        lblName.text = cityTitle.count > 0 ? cityTitle : weather.name
         lblDescription.text = weather.desc
         imgWeather.image = UIImage(named: weather.icon!)
         lblTemperature.text = String(format: "%.0f", weather.tempereture!)

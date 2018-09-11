@@ -37,6 +37,8 @@ class ViewController: BaseViewController {
                     if let _ = weather.id, let _ = weather.name{
                         DispatchQueue.main.async {
                             self.showWeatherDetail(weather: weather, coordinate: userLocation.coordinate, removeButtonIsHidden: true)
+                            let newRegion = MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+                            self.mapView.setRegion(newRegion, animated: true)
                         }
                     }
                 }
@@ -59,7 +61,6 @@ class ViewController: BaseViewController {
                 }
             }
         }
-        fitBookmarkPins()
     }
     func fitBookmarkPins(){
         Utils.delay(0.5) {
@@ -111,19 +112,25 @@ class ViewController: BaseViewController {
             self.present(bookmarksViewController, animated: true, completion: nil)
         }
     }
-    func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D, removeButtonIsHidden:Bool = false){
+    func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D, title:String = "", removeButtonIsHidden:Bool = false){
         self.partialViewHeight = 200
         let cityViewController = self.storyboard?.instantiateViewController(withIdentifier: "CityViewController") as! CityViewController
         cityViewController.weather = weather
         cityViewController.coordinate = coordinate
         cityViewController.delegate = self
         cityViewController.removeButtonIsHidden = removeButtonIsHidden
+        cityViewController.cityTitle = title
         cityViewController.modalPresentationStyle = UIModalPresentationStyle.custom
         cityViewController.transitioningDelegate = self
         self.present(cityViewController, animated: true, completion: nil)
     }
     @IBAction func btnShowKnownPlaces(_ sender: UIButton) {
-        
+        self.partialViewHeight = 190
+        let KnownLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "KnownLocationViewController") as! KnownLocationViewController
+        KnownLocationViewController.modalPresentationStyle = UIModalPresentationStyle.custom
+        KnownLocationViewController.transitioningDelegate = self
+        KnownLocationViewController.delegate = self
+        self.present(KnownLocationViewController, animated: true, completion: nil)
     }
     @IBAction func btnShowSettings(_ sender: UIButton) {
         self.partialViewHeight = 180
@@ -209,5 +216,22 @@ extension ViewController:CityViewControllerDelegate{
     }
     func didBookmarkRemoved(_ weatherId: Int) {
         self.refreshExistingBookmarkPins()
+        self.fitBookmarkPins()
+    }
+}
+extension ViewController:KnownLocationDelegate{
+    func didSelectKnownLocation(_ location: KnownLocationModel) {
+        provider.getTodaysForecast(latitude: location.coordinate!.latitude, longitute: location.coordinate!.longitude) { (weather, error) in
+            if let weather = weather{
+                if let _ = weather.id, let _ = weather.name{
+                    DispatchQueue.main.async {
+                        self.showWeatherDetail(weather: weather, coordinate: location.coordinate!, title: location.name! ,removeButtonIsHidden: true)
+                        
+                        let newRegion = MKCoordinateRegionMake(location.coordinate!, MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
+                        self.mapView.setRegion(newRegion, animated: true)
+                    }
+                }
+            }
+        }
     }
 }
