@@ -31,10 +31,21 @@ class ViewController: BaseViewController {
         }else{
             locationManager.requestWhenInUseAuthorization()
         }
+        if let userLocation = locationManager.location{
+            provider.getTodaysForecast(latitude: userLocation.coordinate.latitude, longitute: userLocation.coordinate.longitude) { (weather, error) in
+                if let weather = weather{
+                    if let _ = weather.id, let _ = weather.name{
+                        DispatchQueue.main.async {
+                            self.showWeatherDetail(weather: weather, coordinate: userLocation.coordinate, removeButtonIsHidden: true)
+                        }
+                    }
+                }
+            }
+        }
     }
     func addBookmarkPinGesture(){
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(mapViewLongPressed(_:)))
-        gestureRecognizer.minimumPressDuration = 0.5
+        gestureRecognizer.minimumPressDuration = 1
         mapView.addGestureRecognizer(gestureRecognizer)
     }
     func refreshExistingBookmarkPins(){
@@ -72,6 +83,7 @@ class ViewController: BaseViewController {
                     annotation.coordinate = mapCoordinate
                     DispatchQueue.main.async {
                         self.mapView.addAnnotation(annotation)
+                        self.mapView.selectAnnotation(annotation, animated: true)
                     }
                 }else{
                     self.showError(title: Strings.ErrorTitle, message: Strings.ErrorOccured, handler: nil)
@@ -99,12 +111,13 @@ class ViewController: BaseViewController {
             self.present(bookmarksViewController, animated: true, completion: nil)
         }
     }
-    func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D){
+    func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D, removeButtonIsHidden:Bool = false){
         self.partialViewHeight = 200
         let cityViewController = self.storyboard?.instantiateViewController(withIdentifier: "CityViewController") as! CityViewController
         cityViewController.weather = weather
         cityViewController.coordinate = coordinate
         cityViewController.delegate = self
+        cityViewController.removeButtonIsHidden = removeButtonIsHidden
         cityViewController.modalPresentationStyle = UIModalPresentationStyle.custom
         cityViewController.transitioningDelegate = self
         self.present(cityViewController, animated: true, completion: nil)
@@ -113,9 +126,18 @@ class ViewController: BaseViewController {
         
     }
     @IBAction func btnShowSettings(_ sender: UIButton) {
-        
+        self.partialViewHeight = 180
+        let settingsViewController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        settingsViewController.modalPresentationStyle = UIModalPresentationStyle.custom
+        settingsViewController.transitioningDelegate = self
+        self.present(settingsViewController, animated: true, completion: nil)
     }
     @IBAction func btnShowHelp(_ sender: UIButton) {
+        self.partialViewHeight = UIScreen.main.bounds.height * 0.75
+        let helpViewController = self.storyboard?.instantiateViewController(withIdentifier: "HelpViewController") as! HelpViewController
+        helpViewController.modalPresentationStyle = UIModalPresentationStyle.custom
+        helpViewController.transitioningDelegate = self
+        self.present(helpViewController, animated: true, completion: nil)
     }
 }
 extension ViewController:UIViewControllerTransitioningDelegate{ 
@@ -165,6 +187,7 @@ extension ViewController : MKMapViewDelegate{
             }
         }
     }
+    
 }
 extension ViewController:CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -18,6 +18,8 @@ class CityViewController: BaseViewController {
     var forecast:ForecastModel!
     var coordinate:CLLocationCoordinate2D!
     var delegate:CityViewControllerDelegate?
+    var removeButtonIsHidden:Bool!
+    @IBOutlet weak var btnRemoveBookmark: UIButton!
     @IBOutlet weak var tblForecast: UICollectionView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
@@ -43,8 +45,9 @@ class CityViewController: BaseViewController {
         lblDescription.text = weather.desc
         imgWeather.image = UIImage(named: weather.icon!)
         lblTemperature.text = String(format: "%.0f", weather.tempereture!)
-        lblTemperatureUnit.text = "C"
-        lblWind.text = ": \(weather.windSpeed!) m/s"
+        lblTemperatureUnit.text = ForecastUserDefaults.Unit == WeatherUnit.metric.rawValue ? "C" : "F"
+        let windUnit = ForecastUserDefaults.Unit == WeatherUnit.metric.rawValue ? "m/s" : "mi/h"
+        lblWind.text = ": \(weather.windSpeed!) \(windUnit)"
         lblMinTemperature.text = String(format: ": %.0f", weather.minTemperature!)
         lblMaxTemperature.text = String(format: ": %.0f", weather.maxTemperature!)
         lblHumidity.text = ": \(weather.humidity!) %"
@@ -52,6 +55,7 @@ class CityViewController: BaseViewController {
     
     func UISettings(){
         self.view.dropShadow(offset: -5)
+        self.btnRemoveBookmark.isHidden = removeButtonIsHidden
     }
     func loadForecastData(){
         provider.getFiveDaysForecast(latitude: coordinate.latitude, longitute: coordinate.longitude) { (forecast, error) in
@@ -101,9 +105,10 @@ extension CityViewController : UICollectionViewDelegate,UICollectionViewDataSour
         cell.lblDateDescription.text = dateFormatter.string(from: date)
         cell.imgWeather.image = UIImage(named: weather.icon!)
         cell.lblTemperature.text = String(format: "%.0f", weather.tempereture!)
-        cell.lblTemperatureUnit.text = "C"
+        cell.lblTemperatureUnit.text = ForecastUserDefaults.Unit == WeatherUnit.metric.rawValue ? "C" : "F"
         cell.lblDescription.text = weather.desc
-        cell.lblInformation.text = "w: \(weather.windSpeed!) m/s, h: \(weather.humidity!)%"
+        let windUnit = ForecastUserDefaults.Unit == WeatherUnit.metric.rawValue ? "m/s" : "mi/h"
+        cell.lblInformation.text = "w: \(weather.windSpeed!) \(windUnit), h: \(weather.humidity!)%"
         return cell
     }
 }

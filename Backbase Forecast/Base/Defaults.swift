@@ -11,7 +11,7 @@ class ForecastUserDefaults: NSObject {
     static let defaults = UserDefaults.standard
     static var Bookmarks:[BookmarkModel]{
         get{
-            guard let placesData = defaults.object(forKey: "Bookmarks") as? Data else {
+            guard let placesData = defaults.object(forKey: Keys.UserBookmarks) as? Data else {
                 return []
             }
             guard let placesArray = NSKeyedUnarchiver.unarchiveObject(with: placesData) as? [BookmarkModel] else {
@@ -21,8 +21,21 @@ class ForecastUserDefaults: NSObject {
         }
         set{
             //cannot append directly: need to archive.
-            let bookmarks = NSKeyedArchiver.archivedData(withRootObject: newValue) as? Any
-            defaults.set(bookmarks, forKey: "Bookmarks")
+            let bookmarks = NSKeyedArchiver.archivedData(withRootObject: newValue)
+            defaults.set(bookmarks, forKey: Keys.UserBookmarks)
+            defaults.synchronize()
+        }
+    }
+    static var Unit:Int{
+        get{
+            guard let unit = defaults.object(forKey: Keys.Unit) as? Int else {
+                return WeatherUnit.metric.rawValue
+            }
+            return unit
+        }
+        set{
+            defaults.set(newValue, forKey: Keys.Unit)
+            defaults.synchronize()
         }
     }
     static func addBookmark(_ bookmark: BookmarkModel){

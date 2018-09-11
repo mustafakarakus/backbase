@@ -9,8 +9,9 @@
 import Foundation
 
 class ForecastProvider:BaseProvider{
-    func getTodaysForecast(latitude:Double, longitute:Double, units:String="metric",result completion:@escaping ((WeatherModel?,Error?)->())){
-        let url = "\(Keys.TodaysForecastUrl)&lat=\(latitude)&lon=\(longitute)&units=\(units)"
+    func getTodaysForecast(latitude:Double, longitute:Double,result completion:@escaping ((WeatherModel?,Error?)->())){
+        let unit = WeatherUnit(rawValue: ForecastUserDefaults.Unit)!
+        let url = "\(Keys.TodaysForecastUrl)&lat=\(latitude)&lon=\(longitute)&units=\(unit)"
         createRequest(withUrlString: url) { (result, error) in
             if let result = result{
                 completion(WeatherModel(with: result), nil)
@@ -19,8 +20,9 @@ class ForecastProvider:BaseProvider{
             }
         }
     }
-    func getFiveDaysForecast(latitude:Double, longitute:Double, units:String="metric",result completion:@escaping ((ForecastModel?,Error?)->())){
-        let url = "\(Keys.FiveDaysForecastUrl)&lat=\(latitude)&lon=\(longitute)&units=\(units)"
+    func getFiveDaysForecast(latitude:Double, longitute:Double,result completion:@escaping ((ForecastModel?,Error?)->())){
+        let unit = WeatherUnit(rawValue: ForecastUserDefaults.Unit)!
+        let url = "\(Keys.FiveDaysForecastUrl)&lat=\(latitude)&lon=\(longitute)&units=\(unit)"
         createRequest(withUrlString: url) { (result, error) in
             if let result = result{
                 completion(ForecastModel(with: result), nil)

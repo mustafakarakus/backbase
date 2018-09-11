@@ -3,29 +3,15 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in ForecastProvider.getTodaysForecast(latitude:longitute:units:result:):ForecastProvider.swift">
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in CityViewController.loadForecastData():CityViewController.swift">
+         contextName = "BookmarksViewController.tableView(_:didSelectRowAt:):BookmarksViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "strDate">
-            </PersistentString>
-            <PersistentString
-               value = "dateFormatter.string(from: date)">
-            </PersistentString>
-            <PersistentString
-               value = "Date(timeIntervalSince1970: 1536656400)">
+               value = "indexPath.row">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "static ForecastUserDefaults.Bookmarks.getter:Defaults.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "String(describing: ForecastUserDefaults.Bookmarks.self)">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "closure #1 in ViewController.mapViewLongPressed(_:):ViewController.swift">
       </ContextState>
       <ContextState
          contextName = "ForecastModel.init(with:):ForecastModel.swift">
@@ -57,17 +43,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "__pthread_kill:(null)">
-         <PersistentStrings>
-            <PersistentString
-               value = "NSKeyedUnarchiver.unarchiveObject(with: placesData)">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in ViewController.mapViewLongPressed(_:):ViewController.swift">
-      </ContextState>
-      <ContextState
          contextName = "ViewController.didSelectBookmark(_:):ViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -76,15 +51,45 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "BookmarksViewController.tableView(_:didSelectRowAt:):BookmarksViewController.swift">
+         contextName = "closure #1 in CityViewController.loadForecastData():CityViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "indexPath.row">
+               value = "strDate">
+            </PersistentString>
+            <PersistentString
+               value = "dateFormatter.string(from: date)">
+            </PersistentString>
+            <PersistentString
+               value = "Date(timeIntervalSince1970: 1536656400)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "CityViewController.collectionView(_:numberOfItemsInSection:):CityViewController.swift">
+         contextName = "closure #1 in ForecastProvider.getTodaysForecast(latitude:longitute:units:result:):ForecastProvider.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SettingsViewController.onUnitsChanged(_:):SettingsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ForecastUserDefaults.Unit">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__pthread_kill:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "NSKeyedUnarchiver.unarchiveObject(with: placesData)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SettingsViewController.UISettings():SettingsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ForecastUserDefaults.Unit">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "closure #1 in CityViewController.btnRemoveBookmark(_:):CityViewController.swift">
@@ -93,6 +98,17 @@
                value = "ForecastUserDefaults.Bookmarks">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "static ForecastUserDefaults.Bookmarks.getter:Defaults.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "String(describing: ForecastUserDefaults.Bookmarks.self)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CityViewController.collectionView(_:numberOfItemsInSection:):CityViewController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

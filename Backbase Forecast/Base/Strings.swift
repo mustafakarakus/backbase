@@ -12,6 +12,7 @@ struct Strings {
     static let NoBookmark = "No bookmarks yet.\nTo add a bookmark, please long press to map for one second"
     static let ErrorTitle = "Error"
     static let ErrorOccured = "Please try again later"
-    static let AreYouSure = "Are you sure"
-    static let AreYouSureDescription = "to remove bookmark?"  
+    static let AreYouSure = "Confirm"
+    static let AreYouSureDescription = "Are you sure to remove bookmark?"
+    static let ResetBookmarks = "Are you sure to remove all bookmarks?"
 } 

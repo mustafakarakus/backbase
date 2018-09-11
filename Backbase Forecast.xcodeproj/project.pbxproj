@@ -10,6 +10,9 @@
 		847B497821477D85008A2761 /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B497721477D85008A2761 /* CityViewController.swift */; };
 		847B497A2147AB57008A2761 /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B49792147AB57008A2761 /* ForecastModel.swift */; };
 		847B497C2147B5CB008A2761 /* ForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B497B2147B5CB008A2761 /* ForecastCollectionViewCell.swift */; };
+		847B497E2147C77B008A2761 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B497D2147C77B008A2761 /* HelpViewController.swift */; };
+		847B49802147CC01008A2761 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B497F2147CC01008A2761 /* SettingsViewController.swift */; };
+		847B49822147CED1008A2761 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B49812147CED1008A2761 /* Enums.swift */; };
 		84917DD92146BB4000480ED3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84917DD82146BB4000480ED3 /* AppDelegate.swift */; };
 		84917DDB2146BB4000480ED3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84917DDA2146BB4000480ED3 /* ViewController.swift */; };
 		84917DDE2146BB4000480ED3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84917DDC2146BB4000480ED3 /* Main.storyboard */; };
@@ -33,6 +36,9 @@
 		847B497721477D85008A2761 /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
 		847B49792147AB57008A2761 /* ForecastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
 		847B497B2147B5CB008A2761 /* ForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionViewCell.swift; sourceTree = "<group>"; };
+		847B497D2147C77B008A2761 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		847B497F2147CC01008A2761 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		847B49812147CED1008A2761 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		84917DD52146BB4000480ED3 /* Backbase Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Backbase Forecast.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84917DD82146BB4000480ED3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84917DDA2146BB4000480ED3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +108,7 @@
 				8499B2182146C9C400D9BAE7 /* Extensions.swift */,
 				8499B21F2146D25500D9BAE7 /* Keys.swift */,
 				8499B22A2146EDB700D9BAE7 /* Strings.swift */,
+				847B49812147CED1008A2761 /* Enums.swift */,
 				8499B2282146DED900D9BAE7 /* Utils.swift */,
 				8499B238214710A900D9BAE7 /* Defaults.swift */,
 			);
@@ -115,6 +122,8 @@
 				84917DDA2146BB4000480ED3 /* ViewController.swift */,
 				8499B2262146D62B00D9BAE7 /* BookmarksViewController.swift */,
 				847B497721477D85008A2761 /* CityViewController.swift */,
+				847B497D2147C77B008A2761 /* HelpViewController.swift */,
+				847B497F2147CC01008A2761 /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -231,9 +240,11 @@
 			files = (
 				8499B2362147081C00D9BAE7 /* BaseViewController.swift in Sources */,
 				8499B239214710A900D9BAE7 /* Defaults.swift in Sources */,
+				847B49822147CED1008A2761 /* Enums.swift in Sources */,
 				8499B2272146D62B00D9BAE7 /* BookmarksViewController.swift in Sources */,
 				8499B22B2146EDB700D9BAE7 /* Strings.swift in Sources */,
 				847B497C2147B5CB008A2761 /* ForecastCollectionViewCell.swift in Sources */,
+				847B49802147CC01008A2761 /* SettingsViewController.swift in Sources */,
 				8499B2292146DED900D9BAE7 /* Utils.swift in Sources */,
 				8499B2252146D3E000D9BAE7 /* BookmarkModel.swift in Sources */,
 				847B497A2147AB57008A2761 /* ForecastModel.swift in Sources */,
@@ -242,6 +253,7 @@
 				8499B22E2146F01200D9BAE7 /* BookmarkAnnotation.swift in Sources */,
 				84917DD92146BB4000480ED3 /* AppDelegate.swift in Sources */,
 				8499B2232146D2F600D9BAE7 /* WeatherModel.swift in Sources */,
+				847B497E2147C77B008A2761 /* HelpViewController.swift in Sources */,
 				847B497821477D85008A2761 /* CityViewController.swift in Sources */,
 				8499B2322146F9A600D9BAE7 /* ForecastProvider.swift in Sources */,
 				8499B2202146D25500D9BAE7 /* Keys.swift in Sources */,
