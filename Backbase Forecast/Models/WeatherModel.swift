@@ -21,8 +21,13 @@ class WeatherModel:NSObject {
     var windSpeed:Double?
     var windDegree:Double?
     var rainChange:Double?
+    var dateDescription:String?
+    var dateUTC:TimeInterval?
+
     init(with dictionary: [String: Any]?) {
         guard let dictionary = dictionary else { return }
+        dateDescription = dictionary["dt_txt"] as? String
+        dateUTC = dictionary["dt"] as? TimeInterval
         name = dictionary["name"] as? String
         id = dictionary["id"] as? Int
         code = dictionary["cod"] as? Int

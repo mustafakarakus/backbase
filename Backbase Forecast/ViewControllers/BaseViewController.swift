@@ -22,5 +22,13 @@ class BaseViewController: UIViewController {
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
+    func showConfirm(title:String, message:String,handler: (((UIAlertAction) -> Swift.Void)?)){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let actionYes = UIAlertAction(title: "Yes", style: .destructive, handler: handler)
+        let actionNo = UIAlertAction(title: "No", style: .default)
+        alert.addAction(actionYes)
+        alert.addAction(actionNo)
+        self.present(alert, animated: true, completion: nil)
+    }
 
 }

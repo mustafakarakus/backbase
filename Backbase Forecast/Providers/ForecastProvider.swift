@@ -19,10 +19,14 @@ class ForecastProvider:BaseProvider{
             }
         }
     }
-    func getFiveDaysForecast(latitude:Double, longitute:Double, units:String="metric",result completion:@escaping (([String : Any]?,Error?)->())){
+    func getFiveDaysForecast(latitude:Double, longitute:Double, units:String="metric",result completion:@escaping ((ForecastModel?,Error?)->())){
         let url = "\(Keys.FiveDaysForecastUrl)&lat=\(latitude)&lon=\(longitute)&units=\(units)"
         createRequest(withUrlString: url) { (result, error) in
-            completion(result,error)
+            if let result = result{
+                completion(ForecastModel(with: result), nil)
+            }else{
+                completion(nil, error)
+            }
         }
     }
 }

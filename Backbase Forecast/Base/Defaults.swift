@@ -31,6 +31,14 @@ class ForecastUserDefaults: NSObject {
         ForecastUserDefaults.Bookmarks = bookmarks
         defaults.synchronize()
     }
+    static func removeBookmark(_ id: Int){
+        if let bookmarkIndex =  ForecastUserDefaults.Bookmarks.index(where: {$0.id == id}){
+            var bookmarks = ForecastUserDefaults.Bookmarks
+            bookmarks.remove(at: bookmarkIndex)
+            ForecastUserDefaults.Bookmarks = bookmarks
+            defaults.synchronize()
+        }
+    }
     static func ClearDefaults(){
         //UserDefaults sıfırlamak için kullanılacak.
         ForecastUserDefaults.Bookmarks = []

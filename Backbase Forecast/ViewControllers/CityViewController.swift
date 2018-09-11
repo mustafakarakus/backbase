@@ -7,11 +7,18 @@
 //
 
 import UIKit
-
-class CityViewController: UIViewController {
+import CoreLocation
+protocol CityViewControllerDelegate {
+    func didDismissed()
+    func didBookmarkRemoved(_ weatherId:Int)
+}
+class CityViewController: BaseViewController {
 
     var weather:WeatherModel!
-    
+    var forecast:ForecastModel!
+    var coordinate:CLLocationCoordinate2D!
+    var delegate:CityViewControllerDelegate?
+    @IBOutlet weak var tblForecast: UICollectionView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
     @IBOutlet weak var imgWeather: UIImageView!
@@ -21,11 +28,14 @@ class CityViewController: UIViewController {
     @IBOutlet weak var lblMinTemperature: UILabel!
     @IBOutlet weak var lblMaxTemperature: UILabel!
     @IBOutlet weak var lblHumidity: UILabel!
-    
+    @IBOutlet weak var loading: UIActivityIndicatorView!
+
+    let provider = ForecastProvider()
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
         UISettings()
+        loadForecastData()
     }
     
     func initView(){
@@ -43,9 +53,57 @@ class CityViewController: UIViewController {
     func UISettings(){
         self.view.dropShadow(offset: -5)
     }
- 
+    func loadForecastData(){
+        provider.getFiveDaysForecast(latitude: coordinate.latitude, longitute: coordinate.longitude) { (forecast, error) in
+            if let forecast = forecast{
+                self.forecast = forecast
+                DispatchQueue.main.async {
+                    self.tblForecast.reloadData()
+                    self.loading.stopAnimating()
+                }
+            }else{
+                
+            }
+        }
+    }
     @IBAction func btnDismiss(_ sender: Any) {
+        self.delegate?.didDismissed()
         self.dismiss(animated: true, completion: nil)
     }
+    @IBAction func btnRemoveBookmark(_ sender: Any) {
+        showConfirm(title: Strings.AreYouSure, message: Strings.AreYouSureDescription) { (action) in
+            if let weatherId = self.weather.id{
+                ForecastUserDefaults.removeBookmark(weatherId)
+                self.delegate?.didBookmarkRemoved(weatherId)
+                self.dismiss(animated: true, completion: nil)
+            }else{
+                self.showError(title: Strings.ErrorTitle, message: Strings.ErrorTitle, handler: nil)
+            }
+        }
+    }
     
+}
+extension CityViewController : UICollectionViewDelegate,UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if forecast != nil{
+            return forecast.list.count
+        }
+        return 0
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
+        let weather = forecast.list[indexPath.row]
+        let date = Date(timeIntervalSince1970: weather.dateUTC!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "EEE HH:mm"
+        cell.lblDateDescription.text = dateFormatter.string(from: date)
+        cell.imgWeather.image = UIImage(named: weather.icon!)
+        cell.lblTemperature.text = String(format: "%.0f", weather.tempereture!)
+        cell.lblTemperatureUnit.text = "C"
+        cell.lblDescription.text = weather.desc
+        cell.lblInformation.text = "w: \(weather.windSpeed!) m/s, h: \(weather.humidity!)%"
+        return cell
+    }
 }

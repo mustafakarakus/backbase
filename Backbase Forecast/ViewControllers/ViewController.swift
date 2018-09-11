@@ -19,7 +19,7 @@ class ViewController: BaseViewController {
         super.viewDidLoad()
         locationSettings()
         addBookmarkPinGesture()
-        addExistingBookmarkPins()
+        refreshExistingBookmarkPins()
     }
     
     // MARK: Settings
@@ -37,7 +37,8 @@ class ViewController: BaseViewController {
         gestureRecognizer.minimumPressDuration = 0.5
         mapView.addGestureRecognizer(gestureRecognizer)
     }
-    func addExistingBookmarkPins(){
+    func refreshExistingBookmarkPins(){
+        self.mapView.removeAnnotations(self.mapView.annotations)
         for bookmarkModel in ForecastUserDefaults.Bookmarks{
             if let strLatitude = bookmarkModel.latitude, let strLongitude = bookmarkModel.longitude{
                 if let latitude = Double(strLatitude), let longitude = Double(strLongitude){
@@ -83,7 +84,6 @@ class ViewController: BaseViewController {
         if #available(iOS 10.0, *) {
             let feedback = UIImpactFeedbackGenerator() // haptic
             feedback.impactOccurred()
-        } else {
         }
     }
     
@@ -99,10 +99,12 @@ class ViewController: BaseViewController {
             self.present(bookmarksViewController, animated: true, completion: nil)
         }
     }
-    func showWeatherDetail(weather: WeatherModel){
-        self.partialViewHeight = 130
+    func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D){
+        self.partialViewHeight = 200
         let cityViewController = self.storyboard?.instantiateViewController(withIdentifier: "CityViewController") as! CityViewController
         cityViewController.weather = weather
+        cityViewController.coordinate = coordinate
+        cityViewController.delegate = self
         cityViewController.modalPresentationStyle = UIModalPresentationStyle.custom
         cityViewController.transitioningDelegate = self
         self.present(cityViewController, animated: true, completion: nil)
@@ -147,12 +149,16 @@ extension ViewController : MKMapViewDelegate{
         let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         let newRegion = MKCoordinateRegionMake(view.annotation!.coordinate, span)
         self.mapView.setRegion(newRegion, animated: true)
+        if #available(iOS 10.0, *) {
+            let feedback = UIImpactFeedbackGenerator() // haptic
+            feedback.impactOccurred()
+        }
         if let annotation = view.annotation as? BookmarkAnnotation{
             provider.getTodaysForecast(latitude: annotation.coordinate.latitude, longitute: annotation.coordinate.longitude) { (weather, error) in
                 if let weather = weather{
                     if let _ = weather.id, let _ = weather.name{
-                        DispatchQueue.main.async {
-                            self.showWeatherDetail(weather: weather)
+                        DispatchQueue.main.async { 
+                            self.showWeatherDetail(weather: weather, coordinate: annotation.coordinate)
                         }
                     }
                 }
@@ -172,5 +178,13 @@ extension ViewController:BookmarkDelegate{
                 self.mapView.selectAnnotation(selectedAnnotation, animated: true)
             })
         }
+    }
+}
+extension ViewController:CityViewControllerDelegate{
+    func didDismissed() {
+        self.fitBookmarkPins()
+    }
+    func didBookmarkRemoved(_ weatherId: Int) {
+        self.refreshExistingBookmarkPins()
     }
 }

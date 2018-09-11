@@ -10,7 +10,7 @@ import UIKit
 protocol BookmarkDelegate {
     func didSelectBookmark(_ bookmark:BookmarkModel)
 }
-class BookmarksViewController: UIViewController {
+class BookmarksViewController: BaseViewController {
     @IBOutlet weak var tblBookmarks: UITableView!
     var delegate:BookmarkDelegate?
     override func viewDidLoad() {
