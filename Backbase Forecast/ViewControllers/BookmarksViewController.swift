@@ -11,12 +11,19 @@ protocol BookmarkDelegate {
     func didSelectBookmark(_ bookmark:BookmarkModel)
 }
 class BookmarksViewController: BaseViewController {
-    @IBOutlet weak var tblBookmarks: UITableView!
+    
+    // MARK: variables
     var delegate:BookmarkDelegate?
+    
+    // MARK: IBOutlet
+    @IBOutlet weak var tblBookmarks: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UISettings()
     }
+    
+    // MARK: functions
     func UISettings(){
         self.view.dropShadow(offset: -5)
         tblBookmarks.tableFooterView = UIView(frame: CGRect.zero)
@@ -24,6 +31,8 @@ class BookmarksViewController: BaseViewController {
             tblBookmarks.emptyMessage(Strings.NoBookmark) 
         }
     }
+    
+    // MARK: IBActions
     @IBAction func dismiss(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }

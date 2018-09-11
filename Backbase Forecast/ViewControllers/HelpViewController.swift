@@ -10,8 +10,9 @@ import UIKit
 import WebKit
 
 class HelpViewController: UIViewController {
-    
+    // MARK: IBOutlets
     @IBOutlet weak var webView: UIWebView! //we can't use webkitWebView, because we want to support iOS8+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.delegate = self

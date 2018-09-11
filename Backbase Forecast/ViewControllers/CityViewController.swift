@@ -14,12 +14,16 @@ protocol CityViewControllerDelegate {
 }
 class CityViewController: BaseViewController {
 
+    // MARK: variables
     var weather:WeatherModel!
     var forecast:ForecastModel!
     var coordinate:CLLocationCoordinate2D!
     var delegate:CityViewControllerDelegate?
     var removeButtonIsHidden:Bool!
     var cityTitle: String!
+    let provider = ForecastProvider()
+    
+    // MARK: IBOutlets
     @IBOutlet weak var btnRemoveBookmark: UIButton!
     @IBOutlet weak var tblForecast: UICollectionView!
     @IBOutlet weak var lblName: UILabel!
@@ -33,7 +37,6 @@ class CityViewController: BaseViewController {
     @IBOutlet weak var lblHumidity: UILabel!
     @IBOutlet weak var loading: UIActivityIndicatorView!
 
-    let provider = ForecastProvider()
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
@@ -41,6 +44,7 @@ class CityViewController: BaseViewController {
         loadForecastData()
     }
     
+    // MARK: functions
     func initView(){
         lblName.text = cityTitle.count > 0 ? cityTitle : weather.name
         lblDescription.text = weather.desc
@@ -71,6 +75,8 @@ class CityViewController: BaseViewController {
             }
         }
     }
+    
+    // MARK: IBActions
     @IBAction func btnDismiss(_ sender: Any) {
         self.delegate?.didDismissed()
         self.dismiss(animated: true, completion: nil)

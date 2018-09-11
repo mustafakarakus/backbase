@@ -10,11 +10,15 @@ import UIKit
 import MapKit
 
 class ViewController: BaseViewController {
-    @IBOutlet weak var mapView: MKMapView!
+    // MARK: variables
     let provider = ForecastProvider()
     var locationManager = CLLocationManager()
     var data = [BookmarkModel]()
     var partialViewHeight = UIScreen.main.bounds.height / 2
+    
+    // MARK: IBOutlets
+    @IBOutlet weak var mapView: MKMapView!
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         locationSettings()
@@ -22,7 +26,7 @@ class ViewController: BaseViewController {
         refreshExistingBookmarkPins()
     }
     
-    // MARK: Settings
+    // MARK: functions
     func locationSettings(){
         locationManager.delegate = self
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
@@ -69,6 +73,18 @@ class ViewController: BaseViewController {
             self.mapView.setRegion(newRegion, animated: true)
         }
     }
+    func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D, title:String = "", removeButtonIsHidden:Bool = false){
+        self.partialViewHeight = 200
+        let cityViewController = self.storyboard?.instantiateViewController(withIdentifier: "CityViewController") as! CityViewController
+        cityViewController.weather = weather
+        cityViewController.coordinate = coordinate
+        cityViewController.delegate = self
+        cityViewController.removeButtonIsHidden = removeButtonIsHidden
+        cityViewController.cityTitle = title
+        cityViewController.modalPresentationStyle = UIModalPresentationStyle.custom
+        cityViewController.transitioningDelegate = self
+        self.present(cityViewController, animated: true, completion: nil)
+    }
     
     // MARK: Map Action
     @objc func mapViewLongPressed(_ recognizer : UIGestureRecognizer){
@@ -111,18 +127,6 @@ class ViewController: BaseViewController {
             bookmarksViewController.transitioningDelegate = self
             self.present(bookmarksViewController, animated: true, completion: nil)
         }
-    }
-    func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D, title:String = "", removeButtonIsHidden:Bool = false){
-        self.partialViewHeight = 200
-        let cityViewController = self.storyboard?.instantiateViewController(withIdentifier: "CityViewController") as! CityViewController
-        cityViewController.weather = weather
-        cityViewController.coordinate = coordinate
-        cityViewController.delegate = self
-        cityViewController.removeButtonIsHidden = removeButtonIsHidden
-        cityViewController.cityTitle = title
-        cityViewController.modalPresentationStyle = UIModalPresentationStyle.custom
-        cityViewController.transitioningDelegate = self
-        self.present(cityViewController, animated: true, completion: nil)
     }
     @IBAction func btnShowKnownPlaces(_ sender: UIButton) {
         self.partialViewHeight = 180

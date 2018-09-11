@@ -14,6 +14,7 @@ protocol KnownLocationDelegate {
 }
 class KnownLocationViewController: BaseViewController {
     
+    // MARK: variables
     var locations = [KnownLocationModel]()
     let provider = KnownLocationProvider()
     var delegate:KnownLocationDelegate?
@@ -25,9 +26,13 @@ class KnownLocationViewController: BaseViewController {
             self.locations = locations
         }
     }
+    
+    // MARK: functions
     func UISettings(){
         self.view.dropShadow(offset: -5)
     }
+    
+    // MARK: IBActions
     @IBAction func btnDismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }

@@ -15,6 +15,7 @@ class BaseViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         self.dismiss(animated: true, completion: nil)
     }
+    // MARK: Messages
     func showError(title:String, message:String,handler: (((UIAlertAction) -> Swift.Void)?)){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "Okay", style: .default, handler: handler)

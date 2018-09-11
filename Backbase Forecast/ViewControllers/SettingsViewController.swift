@@ -9,16 +9,21 @@
 import UIKit
 
 class SettingsViewController: BaseViewController {
-
+    // MARK: IBOutlets
     @IBOutlet weak var segUnits: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UISettings()
     }
+    
+    // MARK: functions
     func UISettings(){
         self.view.dropShadow(offset: -5)
         segUnits.selectedSegmentIndex = ForecastUserDefaults.Unit
     }
+    
+    // MARK: IBActions
     @IBAction func btnDismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
