@@ -25,7 +25,6 @@ class HelpViewController: UIViewController {
 }
 extension HelpViewController : UIWebViewDelegate{
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        let script = String(format: "window.scrollBy(0,%d)",100)
-        webView.stringByEvaluatingJavaScript(from: script)
+        
     }
 }
