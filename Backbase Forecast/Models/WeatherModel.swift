@@ -9,7 +9,6 @@
 import Foundation
 class WeatherModel:NSObject {
     var id: Int?
-    var code:Int?
     var name : String?
     var desc:String?
     var icon:String?
@@ -24,32 +23,41 @@ class WeatherModel:NSObject {
     var dateDescription:String?
     var dateUTC:TimeInterval?
 
-    init(with dictionary: [String: Any]?) {
-        guard let dictionary = dictionary else { return }
-        dateDescription = dictionary["dt_txt"] as? String
-        dateUTC = dictionary["dt"] as? TimeInterval
-        name = dictionary["name"] as? String
-        id = dictionary["id"] as? Int
-        code = dictionary["cod"] as? Int
-        if let weatherInformation = dictionary["weather"] as? [[String:Any]]{
-            if let weather = weatherInformation.first{
-                desc = weather["description"] as? String
-                icon = weather["icon"] as? String
-                main = weather["main"] as? String
-            }
+    init?(with dictionary: [String: Any]?) {
+        
+        guard let dictionary = dictionary,
+            let weatherInformation = dictionary["weather"] as? [[String:Any]],
+            let desc = weatherInformation[0]["description"] as? String,
+            let icon = weatherInformation[0]["icon"] as? String,
+            let main = weatherInformation[0]["main"] as? String,
+            let mainInformation = dictionary["main"] as? [String:Any],
+            let humidity = mainInformation["humidity"] as? Int,
+            let tempereture = mainInformation["temp"] as? Double,
+            let minTemperature = mainInformation["temp_min"] as? Double,
+            let maxTemperature = mainInformation["temp_max"] as? Double,
+            let windInformation = dictionary["wind"] as? [String:Any],
+            let windSpeed = windInformation["speed"] as? Double
+            else 
+        {
+            return nil
         }
-        if let mainInformation = dictionary["main"] as? [String:Any]{
-            humidity = mainInformation["humidity"] as? Int
-            tempereture = mainInformation["temp"] as? Double
-            minTemperature = mainInformation["temp_min"] as? Double
-            maxTemperature = mainInformation["temp_max"] as? Double  
-        }
-        if let windInformation = dictionary["wind"] as? [String:Any]{
-            windSpeed = windInformation["speed"] as? Double
-            windDegree = windInformation["deg"] as? Double
-        }
+        
+        self.desc = desc
+        self.icon = icon
+        self.main = main
+        self.humidity = humidity
+        self.tempereture = tempereture
+        self.minTemperature = minTemperature
+        self.maxTemperature = maxTemperature
+        self.windSpeed = windSpeed
+        
+        //Optional, for forecast model
+        self.dateUTC = dictionary["dt"] as? TimeInterval 
+        self.dateDescription = dictionary["dt_txt"] as? String
         if let rainInformation = dictionary["rain"] as? [String:Any]{
-            rainChange = rainInformation["3h"] as? Double
+            self.rainChange = rainInformation["3h"] as? Double
         }
+        self.name = dictionary["name"] as? String
+        self.id = dictionary["id"] as? Int
     }
 }

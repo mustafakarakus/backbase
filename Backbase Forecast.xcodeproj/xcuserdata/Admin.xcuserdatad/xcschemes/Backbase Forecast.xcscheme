@@ -29,6 +29,16 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "84144DFA21491A670062EBFC"
+               BuildableName = "Backbase ForecastTests.xctest"
+               BlueprintName = "Backbase ForecastTests"
+               ReferencedContainer = "container:Backbase Forecast.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

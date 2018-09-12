@@ -8,22 +8,24 @@
 
 import Foundation
 class ForecastModel:NSObject {
-    var code:String?
-    var cnt:Int?
+    
     var list = [WeatherModel]()
     var cityName:String?
     
-    init(with dictionary: [String: Any]?) {
-        guard let dictionary = dictionary else { return }
-        code = dictionary["cod"] as? String
-        cnt = dictionary["cnt"] as? Int
-        if let cityInformation = dictionary["city"] as? [String:Any]{
-                cityName = cityInformation["name"] as? String
+    init?(with dictionary: [String: Any]?) {
+        guard let dictionary = dictionary,
+            let cityInformation = dictionary["city"] as? [String:Any],
+            let cityName = cityInformation["name"] as? String,
+            let weatherList = dictionary["list"] as? [[String:Any]]
+            else
+        {
+            return nil
         }
-        if let weatherList = dictionary["list"] as? [[String:Any]]{
-            list = []
-            for weather in weatherList{
-                list.append(WeatherModel(with: weather))
+        self.cityName = cityName
+        list = []
+        for weather in weatherList{
+            if let weatherModel = WeatherModel(with: weather){
+                list.append(weatherModel)
             }
         }
     }
