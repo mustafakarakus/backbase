@@ -15,7 +15,6 @@ struct Keys {
     static let FiveDaysForecastUrl = "\(Keys.BaseUrl)/forecast?appid=\(Keys.ApiKey)"
     static let HelpUrl = "https://github.com/mustafakarakus/backbase/blob/master/README.md"
     
-    
     static let UserBookmarks = "_UserBookmarks"
     static let Unit = "_Unit"
 }

@@ -18,7 +18,7 @@ class ViewController: BaseViewController {
     
     // MARK: IBOutlets
     @IBOutlet weak var mapView: MKMapView!
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationSettings()
@@ -36,18 +36,12 @@ class ViewController: BaseViewController {
             locationManager.requestWhenInUseAuthorization()
         }
         if let userLocation = locationManager.location{
-            provider.getTodaysForecast(latitude: userLocation.coordinate.latitude, longitute: userLocation.coordinate.longitude) { (weather, error) in
-                if let weather = weather{
-                    if let _ = weather.id, let _ = weather.name{
-                        DispatchQueue.main.async {
-                            self.showWeatherDetail(weather: weather, coordinate: userLocation.coordinate, removeButtonIsHidden: true)
-                            let newRegion = MKCoordinateRegionMake(userLocation.coordinate, MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-                            self.mapView.setRegion(newRegion, animated: true)
-                        }
-                    }
-                }
-            }
+            self.getForecastAndShow(coordinate: userLocation.coordinate,removeButtonIsHidden:true)
         }
+    }
+    func setMapRegion(_ coordinate:CLLocationCoordinate2D,span: MKCoordinateSpan){
+        let newRegion = MKCoordinateRegionMake(coordinate,span)
+        self.mapView.setRegion(newRegion, animated: true)
     }
     func addBookmarkPinGesture(){
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(mapViewLongPressed(_:)))
@@ -69,8 +63,22 @@ class ViewController: BaseViewController {
     func fitBookmarkPins(){
         Utils.delay(0.5) {
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-            let newRegion = MKCoordinateRegionMake(self.mapView.region.center, self.mapView.region.span)
-            self.mapView.setRegion(newRegion, animated: true)
+            self.setMapRegion(self.mapView.region.center,span: self.mapView.region.span)
+        }
+    }
+    func getForecastAndShow(coordinate:CLLocationCoordinate2D, title:String="", removeButtonIsHidden:Bool = false, completion:((WeatherModel)->())? = nil){
+        provider.getTodaysForecast(latitude: coordinate.latitude, longitute: coordinate.longitude) { (weather, error) in
+            if let weather = weather {
+                if let _ = weather.id, let _ = weather.name{
+                    DispatchQueue.main.async {
+                        self.showWeatherDetail(weather: weather, coordinate: coordinate,title: title,removeButtonIsHidden:  removeButtonIsHidden)
+                        self.setMapRegion(coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+                        if let completion = completion{
+                            completion(weather)
+                        }
+                    }
+                }
+            }
         }
     }
     func showWeatherDetail(weather: WeatherModel, coordinate:CLLocationCoordinate2D, title:String = "", removeButtonIsHidden:Bool = false){
@@ -81,9 +89,7 @@ class ViewController: BaseViewController {
         cityViewController.delegate = self
         cityViewController.removeButtonIsHidden = removeButtonIsHidden
         cityViewController.cityTitle = title
-        cityViewController.modalPresentationStyle = UIModalPresentationStyle.custom
-        cityViewController.transitioningDelegate = self
-        self.present(cityViewController, animated: true, completion: nil)
+        self.showBottomView(viewController: cityViewController)
     }
     
     // MARK: Map Action
@@ -91,25 +97,19 @@ class ViewController: BaseViewController {
         if recognizer.state != .began { return }
         let touchPoint = recognizer.location(in: mapView)
         let mapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-        provider.getTodaysForecast(latitude: mapCoordinate.latitude, longitute: mapCoordinate.longitude) { (result, error) in
-            if let forecastData = result{
-                if let id = forecastData.id, let name = forecastData.name{
-                    let bookmarkModel = BookmarkModel(id:id,latitude: "\(mapCoordinate.latitude)", longitude: "\(mapCoordinate.longitude)", name: name)
-                    ForecastUserDefaults.addBookmark(bookmarkModel)
-                    let annotation = BookmarkAnnotation(id: 1, model: bookmarkModel)
-                    annotation.coordinate = mapCoordinate
-                    DispatchQueue.main.async {
-                        self.mapView.addAnnotation(annotation)
-                        self.mapView.selectAnnotation(annotation, animated: true)
-                    }
-                }else{
-                    self.showError(title: Strings.ErrorTitle, message: Strings.ErrorOccured, handler: nil)
+        self.getForecastAndShow(coordinate: mapCoordinate) { (weatherModel) in
+            if let id = weatherModel.id, let name = weatherModel.name{
+                let bookmarkModel = BookmarkModel(id:id,latitude: "\(mapCoordinate.latitude)", longitude: "\(mapCoordinate.longitude)", name: name)
+                ForecastUserDefaults.addBookmark(bookmarkModel)
+                let annotation = BookmarkAnnotation(id: 1, model: bookmarkModel)
+                annotation.coordinate = mapCoordinate
+                DispatchQueue.main.async {
+                    self.mapView.addAnnotation(annotation)
                 }
             }else{
                 self.showError(title: Strings.ErrorTitle, message: Strings.ErrorOccured, handler: nil)
             }
         }
-        
         if #available(iOS 10.0, *) {
             let feedback = UIImpactFeedbackGenerator() // haptic
             feedback.impactOccurred()
@@ -117,126 +117,35 @@ class ViewController: BaseViewController {
     }
     
     // MARK: IBActions
+    func showBottomView(viewController:UIViewController){
+        viewController.modalPresentationStyle = UIModalPresentationStyle.custom
+        viewController.transitioningDelegate = self
+        self.present(viewController, animated: true, completion: nil)
+    }
     @IBAction func btnShowBookmarks(_ sender: UIButton) {
         fitBookmarkPins()
         self.partialViewHeight = UIScreen.main.bounds.height / 2
         DispatchQueue.main.async { //Fit pins and open viewcontroller sametime
             let bookmarksViewController = self.storyboard?.instantiateViewController(withIdentifier: "BookmarksViewController") as! BookmarksViewController
             bookmarksViewController.delegate = self
-            bookmarksViewController.modalPresentationStyle = UIModalPresentationStyle.custom
-            bookmarksViewController.transitioningDelegate = self
-            self.present(bookmarksViewController, animated: true, completion: nil)
+            self.showBottomView(viewController: bookmarksViewController)
         }
     }
     @IBAction func btnShowKnownPlaces(_ sender: UIButton) {
         self.partialViewHeight = 180
-        let KnownLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "KnownLocationViewController") as! KnownLocationViewController
-        KnownLocationViewController.modalPresentationStyle = UIModalPresentationStyle.custom
-        KnownLocationViewController.transitioningDelegate = self
-        KnownLocationViewController.delegate = self
-        self.present(KnownLocationViewController, animated: true, completion: nil)
+        let knownLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "KnownLocationViewController") as! KnownLocationViewController
+        knownLocationViewController.delegate = self
+        self.showBottomView(viewController: knownLocationViewController)
     }
     @IBAction func btnShowSettings(_ sender: UIButton) {
         self.partialViewHeight = 180
         let settingsViewController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-        settingsViewController.modalPresentationStyle = UIModalPresentationStyle.custom
-        settingsViewController.transitioningDelegate = self
-        self.present(settingsViewController, animated: true, completion: nil)
+        self.showBottomView(viewController: settingsViewController)
     }
     @IBAction func btnShowHelp(_ sender: UIButton) {
         self.partialViewHeight = UIScreen.main.bounds.height * 0.75
         let helpViewController = self.storyboard?.instantiateViewController(withIdentifier: "HelpViewController") as! HelpViewController
-        helpViewController.modalPresentationStyle = UIModalPresentationStyle.custom
-        helpViewController.transitioningDelegate = self
-        self.present(helpViewController, animated: true, completion: nil)
+        self.showBottomView(viewController: helpViewController)
     }
 }
-extension ViewController:UIViewControllerTransitioningDelegate{ 
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return PartialViewController(presentedViewController: presented, presentingViewController: presenting,size: CGSize(width: self.view.frame.size.width, height: partialViewHeight))
-    }
-}
- 
-extension ViewController : MKMapViewDelegate{
-    // MARK: Mapview Delegates
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !(annotation is MKUserLocation) else {
-            return nil
-        }
-        let identifier = "BookmarkPin"
-        var annotationView: MKAnnotationView?
-        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) {
-            annotationView = dequeuedAnnotationView
-            annotationView?.annotation = annotation
-        }
-        else {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-        }
-        
-        if let annotationView = annotationView {
-            annotationView.image = UIImage(named: "pin")
-            annotationView.centerOffset = CGPoint(x:0, y: -annotationView.frame.size.height)
-        }
-        return annotationView
-    }
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
-        let newRegion = MKCoordinateRegionMake(view.annotation!.coordinate, span)
-        self.mapView.setRegion(newRegion, animated: true)
-        if #available(iOS 10.0, *) {
-            let feedback = UIImpactFeedbackGenerator() // haptic
-            feedback.impactOccurred()
-        }
-        if let annotation = view.annotation as? BookmarkAnnotation{
-            provider.getTodaysForecast(latitude: annotation.coordinate.latitude, longitute: annotation.coordinate.longitude) { (weather, error) in
-                if let weather = weather{
-                    if let _ = weather.id, let _ = weather.name{
-                        DispatchQueue.main.async { 
-                            self.showWeatherDetail(weather: weather, coordinate: annotation.coordinate)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-}
-extension ViewController:CLLocationManagerDelegate{
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-    }
-}
-extension ViewController:BookmarkDelegate{
-    func didSelectBookmark(_ bookmark: BookmarkModel) { 
-        if let selectedAnnotation = self.mapView.annotations.first(where: { ($0 as? BookmarkAnnotation)?.id == bookmark.id }){
-            Utils.delay(0.5, closure: {
-                self.mapView.selectAnnotation(selectedAnnotation, animated: true)
-            })
-        }
-    }
-}
-extension ViewController:CityViewControllerDelegate{
-    func didDismissed() {
-        self.fitBookmarkPins()
-    }
-    func didBookmarkRemoved(_ weatherId: Int) {
-        self.refreshExistingBookmarkPins()
-        self.fitBookmarkPins()
-    }
-}
-extension ViewController:KnownLocationDelegate{
-    func didSelectKnownLocation(_ location: KnownLocationModel) {
-        provider.getTodaysForecast(latitude: location.coordinate!.latitude, longitute: location.coordinate!.longitude) { (weather, error) in
-            if let weather = weather{
-                if let _ = weather.id, let _ = weather.name{
-                    DispatchQueue.main.async {
-                        self.showWeatherDetail(weather: weather, coordinate: location.coordinate!, title: location.name! ,removeButtonIsHidden: true)
-                        
-                        let newRegion = MKCoordinateRegionMake(location.coordinate!, MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
-                        self.mapView.setRegion(newRegion, animated: true)
-                    }
-                }
-            }
-        }
-    }
-}
+

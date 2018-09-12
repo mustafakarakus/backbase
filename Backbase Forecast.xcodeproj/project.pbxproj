@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84144DF6214919050062EBFC /* ViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84144DF5214919050062EBFC /* ViewController+Extensions.swift */; };
+		8431DE44214910BB0021747B /* PartialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431DE43214910BB0021747B /* PartialViewController.swift */; };
 		847B497821477D85008A2761 /* CityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B497721477D85008A2761 /* CityViewController.swift */; };
 		847B497A2147AB57008A2761 /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B49792147AB57008A2761 /* ForecastModel.swift */; };
 		847B497C2147B5CB008A2761 /* ForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B497B2147B5CB008A2761 /* ForecastCollectionViewCell.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84144DF5214919050062EBFC /* ViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extensions.swift"; sourceTree = "<group>"; };
+		8431DE43214910BB0021747B /* PartialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialViewController.swift; sourceTree = "<group>"; };
 		847B497721477D85008A2761 /* CityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewController.swift; sourceTree = "<group>"; };
 		847B49792147AB57008A2761 /* ForecastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
 		847B497B2147B5CB008A2761 /* ForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -128,11 +132,13 @@
 			children = (
 				8499B2352147081C00D9BAE7 /* BaseViewController.swift */,
 				84917DDA2146BB4000480ED3 /* ViewController.swift */,
+				84144DF5214919050062EBFC /* ViewController+Extensions.swift */,
 				8499B2262146D62B00D9BAE7 /* BookmarksViewController.swift */,
 				847B497721477D85008A2761 /* CityViewController.swift */,
 				847B497D2147C77B008A2761 /* HelpViewController.swift */,
 				847B497F2147CC01008A2761 /* SettingsViewController.swift */,
 				8498C2FB2147DD7000E379FB /* KnownLocationViewController.swift */,
+				8431DE43214910BB0021747B /* PartialViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -262,7 +268,9 @@
 				8499B2252146D3E000D9BAE7 /* BookmarkModel.swift in Sources */,
 				847B497A2147AB57008A2761 /* ForecastModel.swift in Sources */,
 				84917DDB2146BB4000480ED3 /* ViewController.swift in Sources */,
+				84144DF6214919050062EBFC /* ViewController+Extensions.swift in Sources */,
 				8499B2192146C9C400D9BAE7 /* Extensions.swift in Sources */,
+				8431DE44214910BB0021747B /* PartialViewController.swift in Sources */,
 				8498C2FE2147DDC300E379FB /* KnownLocationCollectionViewCell.swift in Sources */,
 				8499B22E2146F01200D9BAE7 /* BookmarkAnnotation.swift in Sources */,
 				8498C3002147DE0500E379FB /* KnownLocationProvider.swift in Sources */,
